@@ -3,13 +3,13 @@ defmodule NewsrootCore.TopicEdge do
     data_layer: AshPostgres.DataLayer
 
   postgres do
-    table "topic_edges"
-    repo NewsrootCore.Repo
+    table("topic_edges")
+    repo(NewsrootCore.Repo)
   end
 
   attributes do
-    uuid_primary_key :id
-    attribute :from_id, :uuid
-    attribute :to_id, :uuid
+    uuid_primary_key(:id)
+    attribute(:from_id, :uuid)
+    attribute(:to_id, :uuid)
   end
 end
