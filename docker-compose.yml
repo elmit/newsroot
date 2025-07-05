@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: newsroot_postgres
+    environment:
+      POSTGRES_DB: newsroot_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: newsroot_app
+    environment:
+      MIX_ENV: dev
+      DB_HOST: postgres
+      DB_NAME: newsroot_dev
+      DB_USER: postgres
+      DB_PASS: postgres
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/_build
+      - /app/deps
+      - /app/apps/newsroot_web/assets/node_modules
+    working_dir: /app
+    command: >
+      sh -c "
+        mix deps.get &&
+        mix setup &&
+        mix phx.server
+      "
+
+  # Development setup service - run this once to initialize the database
+  setup:
+    build: .
+    container_name: newsroot_setup
+    environment:
+      MIX_ENV: dev
+      DB_HOST: postgres
+      DB_NAME: newsroot_dev
+      DB_USER: postgres
+      DB_PASS: postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/_build
+      - /app/deps
+    working_dir: /app
+    command: >
+      sh -c "
+        mix deps.get &&
+        mix setup &&
+        echo 'Setup completed successfully!'
+      "
+    profiles:
+      - setup
+
+volumes:
+  postgres_data:

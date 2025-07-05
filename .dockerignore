@@ -1,0 +1,83 @@
+# Git
+.git
+.gitignore
+
+# Build artifacts
+_build/
+deps/
+erl_crash.dump
+*.beam
+
+# Node modules and assets
+apps/*/assets/node_modules/
+apps/*/priv/static/
+node_modules/
+
+# Documentation
+doc/
+docs/
+
+# Test and coverage
+cover/
+coveralls.json
+.excoveralls
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.sqlite
+*.sqlite3
+
+# Environment files (if any)
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+tmp/
+temp/
+
+# Mix
+.mix/
+
+# Elixir Language Server
+.elixir_ls/
+
+# Dialyzer
+priv/plts/
+
+# Cache
+.cache/
+
+# Docker files (don't copy Docker files into the image)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# README and documentation
+README.md
+CHANGELOG.md
+LICENSE*
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml

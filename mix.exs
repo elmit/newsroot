@@ -26,7 +26,11 @@ defmodule Newsroot.MixProject do
 
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix apps/newsroot_web/assets"]
+      setup: [
+        "deps.get",
+        "cmd --app newsroot_core mix ecto.setup",
+        "cmd npm install --prefix apps/newsroot_web/assets"
+      ]
     ]
   end
 end

@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: newsroot_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+
+  app:
+    environment:
+      MIX_ENV: dev
+      DB_HOST: postgres
+      DB_NAME: newsroot_dev
+      DB_USER: postgres
+      DB_PASS: postgres
+      PORT: 4000
+      PHX_SERVER: "true"
+      # Enable live reloading
+      CODE_RELOADING: "true"
+    volumes:
+      - .:/app
+      - /app/_build
+      - /app/deps
+      - /app/apps/newsroot_web/assets/node_modules
+    ports:
+      - "4000:4000"
+      - "4001:4001"  # For LiveView development
+    stdin_open: true
+    tty: true
+    command: >
+      sh -c "
+        echo 'Waiting for postgres...' &&
+        while ! pg_isready -h postgres -p 5432 -U postgres; do
+          sleep 1
+        done &&
+        echo 'PostgreSQL is ready!' &&
+        mix deps.get &&
+        cd apps/newsroot_web/assets && npm install --silent && cd ../../.. &&
+        mix setup &&
+        echo 'Starting Phoenix server...' &&
+        mix phx.server
+      "
+
+  # PgAdmin for database management (optional)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: newsroot_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@newsroot.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_dev_data:
+  pgadmin_data:
