@@ -1,0 +1,6 @@
+{
+  "name": "NewsRoot",
+  "short_name": "NewsRoot",
+  "start_url": "/",
+  "display": "standalone"
+}

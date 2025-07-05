@@ -1,0 +1,32 @@
+defmodule Newsroot.MixProject do
+  use Mix.Project
+
+  def project do
+    [
+      apps_path: "apps",
+      version: "0.1.0",
+      elixir: "~> 1.17",
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      aliases: aliases()
+    ]
+  end
+
+  defp deps do
+    [
+      {:oban, "~> 2.17"},
+      {:ash, "~> 2.19"},
+      {:ash_postgres, "~> 1.2"},
+      {:jason, "~> 1.4"},
+      {:nimble_csv, "~> 1.2"},
+      {:req, "~> 0.4"},
+      {:finch, "~> 0.16"}
+    ]
+  end
+
+  defp aliases do
+    [
+      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix apps/newsroot_web/assets"]
+    ]
+  end
+end
