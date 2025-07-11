@@ -3,7 +3,7 @@ defmodule NewsrootWeb.Router do
 
   plug(Plug.Static,
     at: "/",
-    from: {:newsroot_web, "priv/assets"},
+    from: {:newsroot, "priv/assets"},
     only: ~w(index.html main.js sw.js manifest.json offline.html)
   )
 
@@ -18,5 +18,5 @@ defmodule NewsrootWeb.Router do
     send_resp(conn, 404, "Not found")
   end
 
-  defp asset(file), do: Path.join(:code.priv_dir(:newsroot_web), "assets/" <> file)
+  defp asset(file), do: Path.join(:code.priv_dir(:newsroot), "assets/" <> file)
 end

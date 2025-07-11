@@ -42,13 +42,13 @@ db-shell: ## Open PostgreSQL shell
 	docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec postgres psql -U postgres -d newsroot_dev
 
 db-reset: ## Reset database (drop, create, migrate)
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec app mix cmd --app newsroot_core mix ecto.reset
+       docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec app mix ecto.reset
 
 migrate: ## Run database migrations
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec app mix cmd --app newsroot_core mix ecto.migrate
+       docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec app mix ecto.migrate
 
 rollback: ## Rollback last migration
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec app mix cmd --app newsroot_core mix ecto.rollback
+       docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec app mix ecto.rollback
 
 test: ## Run tests
 	docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec app mix test

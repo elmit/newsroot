@@ -1,4 +1,4 @@
-defmodule NewsrootFetcher.Worker.HTMLWorker do
+defmodule Newsroot.Fetcher.Worker.HTMLWorker do
   use Oban.Worker, queue: :html, max_attempts: 5
 
   @impl Oban.Worker
