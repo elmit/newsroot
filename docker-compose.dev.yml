@@ -27,7 +27,7 @@ services:
       - .:/app
       - /app/_build
       - /app/deps
-      - /app/apps/newsroot_web/assets/node_modules
+      - /app/priv/assets/node_modules
     ports:
       - "4000:4000"
       - "4001:4001"  # For LiveView development
@@ -41,10 +41,10 @@ services:
         done &&
         echo 'PostgreSQL is ready!' &&
         mix deps.get &&
-        cd apps/newsroot_web/assets && npm install --silent && cd ../../.. &&
+        cd priv/assets && npm install --silent && cd ../.. &&
         mix setup &&
         echo 'Starting Phoenix server...' &&
-        mix phx.server
+        mix run --no-halt
       "
 
   # PgAdmin for database management (optional)

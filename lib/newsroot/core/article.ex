@@ -1,10 +1,10 @@
-defmodule NewsrootCore.Article do
+defmodule Newsroot.Core.Article do
   use Ash.Resource,
     data_layer: AshPostgres.DataLayer
 
   postgres do
     table("articles")
-    repo(NewsrootCore.Repo)
+    repo(Newsroot.Repo)
   end
 
   attributes do

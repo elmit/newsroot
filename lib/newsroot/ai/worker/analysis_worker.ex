@@ -1,4 +1,4 @@
-defmodule NewsrootAI.Worker.AnalysisWorker do
+defmodule Newsroot.AI.Worker.AnalysisWorker do
   use Oban.Worker, queue: :analysis, max_attempts: 5
 
   @impl Oban.Worker
