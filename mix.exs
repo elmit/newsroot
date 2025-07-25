@@ -22,6 +22,7 @@ defmodule Newsroot.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ash_oban, "~> 0.4"},
       {:sourceror, "~> 1.8", only: [:dev, :test]},
       {:ash, "~> 3.0"},
       {:igniter, "~> 0.6", only: [:dev, :test]}
